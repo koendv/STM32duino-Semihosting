@@ -1,4 +1,3 @@
-#include <Stream.h>
 
 #ifndef SEMIHOSTINGSTREAM_H
 #define SEMIHOSTINGSTREAM_H
@@ -7,21 +6,27 @@
  * Arduino class to write to and read from semihosting console 
  */
 
+#include <Stream.h>
+
 class SemihostingStream : public Stream
 {
   private:
     int stdin_handle;
     int stdout_handle;
-    char peekbuf;
-    bool peekbuf_valid;
+    static const uint8_t inBufferSize = 64;
+    static const uint8_t outBufferSize = 64;
+    uint8_t inBuffered;
+    uint8_t inReadPos;
+    uint8_t inBuffer[inBufferSize];
+    uint8_t outBuffered;
+    uint8_t outBuffer[outBufferSize];
+    void fillBuffer();
   public:
     SemihostingStream();
     ~SemihostingStream();
     virtual size_t write(uint8_t ch);
-    virtual size_t write(const uint8_t *buffer, size_t size);
     virtual void flush();
     virtual int read();
-    virtual size_t readBytes(char *buf, size_t length);
     virtual int available();
     virtual int peek();
 };

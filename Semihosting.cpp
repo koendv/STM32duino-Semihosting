@@ -11,11 +11,13 @@ SemihostingStream::SemihostingStream() {
   char *stdio_fname=":tt";
   stdin_handle = semihosting::sopen(stdio_fname, semihosting::OPEN_MODE_R, strlen(stdio_fname));
   stdout_handle = semihosting::sopen(stdio_fname, semihosting::OPEN_MODE_W, strlen(stdio_fname));
-  peekbuf = '?';
-  peekbuf_valid = false;
+  inBuffered = 0;
+  inReadPos = 0;
+  outBuffered = 0;
 };
 
 SemihostingStream::~SemihostingStream() {
+  flush();
   semihosting::sclose(stdin_handle);
   semihosting::sclose(stdout_handle);
 }
@@ -23,53 +25,45 @@ SemihostingStream::~SemihostingStream() {
 /* print on gdb console */
 
 size_t SemihostingStream::write(uint8_t ch) {
-  return 1 - semihosting::swrite(stdout_handle, (void *)&ch, 1);
-}
-
-size_t SemihostingStream::write(const uint8_t *buffer, size_t size) {
-  return size - semihosting::swrite(stdout_handle, (void *)buffer, size);
+  outBuffer[outBuffered++] = ch;
+  if ((outBuffered == outBufferSize) || (ch == '\n')) flush();
+  return 1;
 }
 
 void SemihostingStream::flush() {
-  // not buffering writes, so nothing to flush.
+  if (outBuffered > 0) semihosting::swrite(stdout_handle, (void *)outBuffer, outBuffered);
+  outBuffered = 0;
+  return;
 };
 
 /* read from gdb console */
 
 int SemihostingStream::read() {
-  if (peekbuf_valid) {
-    peekbuf_valid = false;
-    return peekbuf;
-  }
-  return semihosting::sreadc();
-}
-
-size_t SemihostingStream::readBytes(char *buf, size_t length) {
-  int i = 0;
-  while(i < length) {
-    int rc = read();
-    if (rc < 0) break;
-    buf[i++] = rc;
-    if (rc == '\n') break;
-  }
-  return i;
+  fillBuffer();
+  if (inBuffered == 0) return -1;
+  inBuffered--;
+  return inBuffer[inReadPos++];
 }
 
 int SemihostingStream::peek() {
-  if (!peekbuf_valid) {
-    int rc = semihosting::sreadc();
-    peekbuf_valid = rc >= 0;
-    if (peekbuf_valid) peekbuf = rc;
-    else peekbuf = '?';
-  }
-  if (peekbuf_valid) return peekbuf;
-  else return -1;
+  fillBuffer();
+  if (inBuffered == 0) return -1;
+  else return inBuffer[inReadPos];
 }
 
 int SemihostingStream::available() {
-  peek();
-  if (peekbuf_valid) return 1;
-  else return 0;
+  fillBuffer();
+  return inBuffered;
+}
+
+void SemihostingStream::fillBuffer() {
+  if (inBuffered > 0) return;
+  flush();
+  int rc = semihosting::sread(stdin_handle, inBuffer, inBufferSize);
+  if (rc < 0) inBuffered = 0;
+  else inBuffered = inBufferSize - rc;
+  inReadPos = 0;
+  return;
 }
 
 /* not truncated */
