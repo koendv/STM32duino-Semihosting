@@ -3,7 +3,7 @@
 
 /* 
  * Arduino class to write to and read from semihosting console 
- * requires the following semihosting calls: SYS_OPEN, SYS_READC, SYS_WRITE, SYS_CLOSE.
+ * requires the following semihosting calls: SYS_OPEN, SYS_READ, SYS_WRITE, SYS_CLOSE.
  * 2020 Koen De Vleeschauwer
  */
 
