@@ -1,11 +1,11 @@
-#include <Semihosting.h>
-
 /*
  * StreamTest - demo of semihosting input and output fron the gdb console
  *
  * This program uses semihosting and requires a debugger probe to run.
  * This program will hang if there is no debugger probe present.
  */
+
+#include <SemihostingStream.h>
 
 SemihostingStream sh;
 

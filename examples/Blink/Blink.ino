@@ -1,14 +1,14 @@
-#include <semihosting_syscalls.h>
-#include <Semihosting.h>
-
 /*
  * Blink - Blink led
- * set the number of times the led will blink from the gdb command prompt:
+ * To set the number of times the led will blink from the gdb command prompt:
  * set args 10
  *
  * This program uses semihosting and requires a debugger probe to run.
  * This program will hang if there is no debugger probe present.
  */
+
+#include <SemihostingStream.h>
+#include <semihosting_syscalls.h>
 
 using namespace std;
 using namespace semihosting;

@@ -3,7 +3,7 @@
 #define SEMIHOSTINGSTREAM_H
 
 /* 
- * Arduino class to write to and read from semihosting console 
+ * Arduino class to write to and read from semihosting console (stdin/stdout, buffered)
  */
 
 #include <Stream.h>

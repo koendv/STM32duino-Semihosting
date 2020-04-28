@@ -1,12 +1,12 @@
-#include <Semihosting.h>
-#include <semihosting_syscalls.h>
-
 /*
  * Semihosting testbench - Tests all semihosting calls.
  *
  * This program uses semihosting and requires a debugger probe to run.
  * This program will hang if there is no debugger probe present.
  */
+
+#include <SemihostingStream.h>
+#include <semihosting_syscalls.h>
 
 using namespace semihosting;
 

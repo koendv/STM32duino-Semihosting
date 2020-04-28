@@ -1,9 +1,8 @@
 #include <semihosting_syscalls.h>
-#include <Semihosting.h>
+#include <SemihostingStream.h>
 
 /* 
- * Arduino class to write to and read from semihosting console 
- * requires the following semihosting calls: SYS_OPEN, SYS_READ, SYS_WRITE, SYS_CLOSE.
+ * Arduino class to write to and read from semihosting console (stdin/stdout, buffered)
  * 2020 Koen De Vleeschauwer
  */
 
