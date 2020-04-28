@@ -23,7 +23,7 @@ namespace semihosting
       "mov r0, %1\n"             /* move int R0 to register r0 */
       "mov r1, %2\n"             /* move int R1 to register r1 */
       "bkpt #0xAB\n"             /* thumb mode semihosting call */
-      "mov %0, r0"               /* more register r0 to int rc */
+      "mov %0, r0"               /* move register r0 to int rc */
       : "=r" (rc)
       : "r" (R0), "r" (R1)
       : "r0", "r1", "ip", "lr", "memory", "cc"
