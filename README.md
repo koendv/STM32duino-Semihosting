@@ -15,11 +15,15 @@ Use SemihostingStream where you would use Serial:
 ```
 #include <SemihostingStream.h>
 SemihostingStream sh;
-sh.println("hello, world!");
+void setup() {
+  sh.println("hello world!");
+}
+void loop() {
+}
 ```
 In the Arduino IDE, choose *Tools⇢Upload Method⇢BMP (Black Magic Probe)* and *Tools⇢Optimize⇢Debug (-g)*.
 
-Every debugger probe is a bit different. When using Black Magic Probe you typically would use commands like:
+Every debugger probe is a bit different. When using e.g. Black Magic Probe you typically would use commands like:
 ```
 koen@raspberrypi:~ $ gdb -q
 (gdb) target extended-remote /dev/ttyBmpGdb
@@ -30,8 +34,8 @@ No. Att Driver
  1      STM32F1 medium density M3/M4
 (gdb) attach 1
 (gdb) run
+hello world!
 ^C
-(gdb) where
 (gdb) quit
 ```
 
