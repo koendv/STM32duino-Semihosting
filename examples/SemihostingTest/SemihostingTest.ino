@@ -99,9 +99,9 @@ void check_readc() {
   int ret;
   while ((ret = sreadc()) != '\n') {
     if (i != sizeof(buf)) buf[i++] = ret;
-    if (!isalnum(ret)) {
+    if (!isPrintable(ret)) {
       sh.println();
-      sh.print("non-alphanumerical char, return code: ");
+      sh.print("non-printable char, code: ");
       sh.print(ret);
       sh.print(" (0x");
       sh.print(ret, HEX);
