@@ -8,7 +8,7 @@ With semihosting an arduino arm system can do keyboard input, screen output, and
 * install [stm32duino library](https://github.com/stm32duino/Arduino_Core_STM32)
 * install [stm32duino-semihosting library](https://github.com/koendv/stm32duino-semihosting) (this library)
 * connect a debugger probe with semihosting support, e.g. a [segger](https://www.segger.com/products/debug-probes/j-link/) or a [black magic probe](https://github.com/blacksphere/blackmagic/wiki).
-* run examples from File->Examples->STM32duino-Semihosting
+* run examples from File⇢Examples⇢STM32duino-Semihosting
 
 # Arduino Use
 Use SemihostingStream where you would use Serial:
@@ -31,6 +31,7 @@ No. Att Driver
 (gdb) attach 1
 (gdb) run
 ^C
+(gdb) where
 (gdb) quit
 ```
 
@@ -84,13 +85,13 @@ Black Magic Probe data from the source file ``src/target/cortexm.c``.
 
 The semihosting specification is Arm document [Semihosting for AArch32 and AArch64](https://www.google.com/search?q=Semihosting+for+AArch32+and+AArch64+site%3A.arm.com)
 
-SYS_GET_CMDLINE returns the command line arguments, separated by spaces. BMP: If a command line argument contains spaces, the spaces are escaped using backslashes. GDB: Set command line arguments using ``set args`` or as parameters to the ``run`` command.
+SYS_GET_CMDLINE returns the command line arguments, separated by spaces. bmp: If a command line argument contains spaces, the spaces are escaped using backslashes. gdb: Set command line arguments using ``set args`` or as parameters to the ``run`` command.
  
-Error numbers reported by SYS_ERRNO are system and debugger dependent. BMP: Error numbers used are from gdb filei/o. See gdb source file ``gdb/include/gdb/fileio.h`` 
+Error numbers reported by SYS_ERRNO are system and debugger dependent. bmp: Error numbers used are from gdb filei/o. See gdb source file ``gdb/include/gdb/fileio.h`` 
 
-SYS_SYSTEM is used to execute a command on the host. BMP: Allow command execution using gdb command ``set remote system-call-allowed 1``
+SYS_SYSTEM is used to execute a command on the host. bmp: Allow command execution using gdb command ``set remote system-call-allowed 1``
 
-SYS_HEAPINFO is used to set heap and stack during target boot. See newlib source file ``newlib/libc/sys/arm/crt0.S``. BMP: Set heapinfo using gdb command ``monitor heapinfo``
+SYS_HEAPINFO is used to set heap and stack during target boot. See newlib source file ``newlib/libc/sys/arm/crt0.S``. bmp: Set heapinfo using gdb command ``monitor heapinfo``
 
 The [Qemu emulator](http://www.qemu.org) supports semihosting, and has a gdb interface.
 
