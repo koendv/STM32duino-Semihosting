@@ -84,7 +84,7 @@ Black Magic Probe data from the source file ``src/target/cortexm.c``.
 
 The semihosting specification is Arm document [Semihosting for AArch32 and AArch64](https://www.google.com/search?q=Semihosting+for+AArch32+and+AArch64+site%3A.arm.com)
 
-SYS_GET_CMDLINE returns the command line arguments, separated by spaces. BMP: If a command line argument contains spaces, the spaces are escaped using backslashes.
+SYS_GET_CMDLINE returns the command line arguments, separated by spaces. BMP: If a command line argument contains spaces, the spaces are escaped using backslashes. GDB: Set command line arguments using ``set args`` or as parameters to the ``run`` command.
  
 Error numbers reported by SYS_ERRNO are system and debugger dependent. BMP: Error numbers used are from gdb filei/o. See gdb source file ``gdb/include/gdb/fileio.h`` 
 
