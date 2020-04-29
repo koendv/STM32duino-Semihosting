@@ -97,7 +97,7 @@ SYS_SYSTEM is used to execute a command on the host. bmp: Allow command executio
 
 SYS_HEAPINFO is used to set heap and stack during target boot. See newlib source file ``newlib/libc/sys/arm/crt0.S``. bmp: Set heapinfo using gdb command ``monitor heapinfo``
 
-The [Qemu emulator](http://www.qemu.org) supports semihosting, and has a gdb interface.
+The [Qemu](http://www.qemu.org) emulator and the [openocd](http://www.openocd.org) debugger are open source projects that support semihosting and gdb.
 
 If you find errors, omissions, or have additional data, feel free to open an issue.
 
