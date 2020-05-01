@@ -55,32 +55,32 @@ The semihosting_bmp C++ header file contains the error numbers for Black Magic P
 # Semihosting calls
 Not every debugger probe implements every semihosting call, and even if it's implemented you may get some surprises.
 
-syscall           |code    |J-Link|BMP|   |
+syscall           | function    |JLink|BMP|   |
 ------------------|--------|---|---|---|
-SYS_CLOCK         | 0x10   |   |   | Returns the number of centiseconds (hundredths of a second) since the execution started.
-SYS_CLOSE         | 0x02   | * | * | Closes a file on the host system.
-SYS_ELAPSED       | 0x30   |   |   | Returns the number of elapsed target ticks since execution started. Use SYS_TICKFREQ to determine the tick frequency.
-SYS_ERRNO         | 0x13   |   | * | Returns the value of the C library errno variable that is associated with the semihosting implementation.
-SYS_EXIT          | 0x18   | * | * | Report to the debugger that execution has completed.
-SYS_EXIT_EXTENDED | 0x20   |   |   | Report to the debugger that execution has completed. (64-bit version)
-SYS_FLEN          | 0x0C   | * | * | Returns the length of a specified file.
-SYS_GET_CMDLINE   | 0x15   | * | * | Returns the command line that is used for the call to the executable, that is, argc and argv.
-SYS_HEAPINFO      | 0x16   |   |   | Returns the system stack and heap parameters. Used in crt0.S.
-SYS_ISERROR       | 0x08   |   |   | Determines whether the return code from another semihosting call is an error status or not.
-SYS_ISTTY         | 0x09   | * | * | Checks whether a file is connected to an interactive device.
-SYS_OPEN          | 0x01   | * | * | Opens a file on the host system.
-SYS_READ          | 0x06   | * | * | Reads the contents of a file into a buffer.
-SYS_READC         | 0x07   | * | * | Reads a byte from the console.
-SYS_REMOVE        | 0x0E   | * | * | Deletes a specified file on the host filing system.
-SYS_RENAME        | 0x0F   | * | * | Renames a specified file.
-SYS_SEEK          | 0x0A   | * | * | Seeks to a specified position in a file using an offset specified from the start of the file.
-SYS_SYSTEM        | 0x12   |   | * | Passes a command to the host command-line interpreter.
-SYS_TICKFREQ      | 0x31   |   |   | Returns the tick frequency.
-SYS_TIME          | 0x11   |   | * | Returns the number of seconds since 00:00 January 1, 1970.
-SYS_TMPNAM        | 0x0D   |   |   | Returns a temporary name for a file identified by a system file identifier.
-SYS_WRITE         | 0x05   | * | * | Writes the contents of a buffer to a specified file at the current file position.
-SYS_WRITEC        | 0x03   | * | * | Writes a character byte to the debug channel.
-SYS_WRITE0        | 0x04   | * | * | Writes a null-terminated string to the debug channel.
+SYS_CLOCK         | sclock   |   |   | Returns the number of centiseconds (hundredths of a second) since the execution started.
+SYS_CLOSE         | sclose   | * | * | Closes a file on the host system.
+SYS_ELAPSED       | selapsed   |   |   | Returns the number of elapsed target ticks since execution started. Use SYS_TICKFREQ to determine the tick frequency.
+SYS_ERRNO         | serrno   |   | * | Returns the value of the C library errno variable that is associated with the semihosting implementation.
+SYS_EXIT          | sexit   | * | * | Report to the debugger that execution has completed.
+SYS_EXIT_EXTENDED | sexitextended   |   |   | Report to the debugger that execution has completed. (64-bit version)
+SYS_FLEN          | sflen   | * | * | Returns the length of a specified file.
+SYS_GET_CMDLINE   | sgetcmdline   | * | * | Returns the command line that is used for the call to the executable, that is, argc and argv.
+SYS_HEAPINFO      | sheapinfo   |   |   | Returns the system stack and heap parameters. Used in crt0.S.
+SYS_ISERROR       | siserror   |   |   | Determines whether the return code from another semihosting call is an error status or not.
+SYS_ISTTY         | sistty   | * | * | Checks whether a file is connected to an interactive device.
+SYS_OPEN          | sopen   | * | * | Opens a file on the host system.
+SYS_READ          | sread   | * | * | Reads the contents of a file into a buffer.
+SYS_READC         | sreadc   | * | * | Reads a byte from the console.
+SYS_REMOVE        | sremove   | * | * | Deletes a specified file on the host filing system.
+SYS_RENAME        | srename   | * | * | Renames a specified file.
+SYS_SEEK          | sseek   | * | * | Seeks to a specified position in a file using an offset specified from the start of the file.
+SYS_SYSTEM        | ssystem   |   | * | Passes a command to the host command-line interpreter.
+SYS_TICKFREQ      | stickfreq   |   |   | Returns the tick frequency.
+SYS_TIME          | stime   |   | * | Returns the number of seconds since 00:00 January 1, 1970.
+SYS_TMPNAM        | stmpnam   |   |   | Returns a temporary name for a file identified by a system file identifier.
+SYS_WRITE         | swrite   | * | * | Writes the contents of a buffer to a specified file at the current file position.
+SYS_WRITEC        | swritec   | * | * | Writes a character byte to the debug channel.
+SYS_WRITE0        | swrite0   | * | * | Writes a null-terminated string to the debug channel.
 
 J-Link data from document UM08001, software version 6.70, March 27, 2020.
 Black Magic Probe data from the source file ``src/target/cortexm.c``.
@@ -97,7 +97,13 @@ SYS_SYSTEM is used to execute a command on the host. bmp: Allow command executio
 
 SYS_HEAPINFO is used to set heap and stack during target boot. See newlib source file ``newlib/libc/sys/arm/crt0.S``. bmp: Set heapinfo using gdb command ``monitor heapinfo``
 
-The [Qemu](http://www.qemu.org) emulator and the [openocd](http://www.openocd.org) debugger are open source projects that support semihosting and gdb.
+bmp: If the target wants to read the special filename ":semihosting-features" to know what semihosting features are supported, it's easiest to create that file on the host in the directory where gdb runs:
+```
+$ echo -e 'SHFB\x03' > ":semihosting-features"
+$ chmod 0444 ":semihosting-features"
+```
+
+The [Qemu](http://www.qemu.org) emulator and the [openocd](http://www.openocd.org) debugger are open source projects that also support semihosting and gdb.
 
 If you find errors, omissions, or have additional data, feel free to open an issue.
 

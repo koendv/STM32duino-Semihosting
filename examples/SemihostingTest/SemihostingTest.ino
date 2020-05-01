@@ -53,7 +53,7 @@ void check_time() {
 }
 
 void check_stdio() {
-  sh.println("SYS_FOPEN special filename 'tt:'");
+  sh.println("SYS_OPEN special filename ':tt'");
   char *stdio_fname=":tt";
   sh.print("stdin ");
   stdin_handle = sopen(stdio_fname, semihosting::OPEN_MODE_R, strlen(stdio_fname));
@@ -61,6 +61,52 @@ void check_stdio() {
   sh.print("stdout ");
   stdout_handle = sopen(stdio_fname, semihosting::OPEN_MODE_W, strlen(stdio_fname));
   check_retcode(stdout_handle);
+}
+
+void check_features() {
+  const int magiclen = 4;
+  unsigned char magic[magiclen];
+  unsigned char c;
+  int fh;
+  int len;
+  sh.println("SYS_OPEN special filename ':semihosting-features'");
+  char *features_fname=":semihosting-features";
+  fh = sopen(features_fname, semihosting::OPEN_MODE_R, strlen(features_fname));
+  if (fh < 0) {
+    sh.println("error open ':semihosting-features'\n");
+    return;
+  }
+  len = sflen(fh);
+  if (len < magiclen) {
+    sh.println("error ':semihosting-features' too short\n");
+    return;
+  }
+  int rc = sread(fh, magic, magiclen);
+  if (rc != 0) {
+    sh.println("error reading ':semihosting-features'\n");
+    return;
+  }
+  if ((magic[0] != 'S') || (magic[1] != 'H') || (magic[2] != 'F') || (magic[3] != 'B')) {
+    sh.println("error ':semihosting-features' bad magic\n");
+    return;
+  }
+  sh.println("':semihosting-features' good magic\n");
+  if (len > magiclen)
+    for(int i = magiclen; i<len-1; i++) {
+      char ch;
+      if (sseek(fh, i) != 0) {
+        sh.println("error seeking ':semihosting-features'\n");
+        return;
+      }
+      if (sread(fh, &ch, 1) != 0) {
+        sclose(fh);
+        return;
+      }
+      sh.print("feature byte: 0x");
+      sh.println(ch, HEX);
+    }
+  sclose(fh);
+  return;
 }
 
 void check_write() {
@@ -89,7 +135,7 @@ void check_read() {
   sh.println(buf);
   check_retcode(ret);
 }
-  
+
 void check_readc() {
   char ch;
   char buf[256]={0};
@@ -138,7 +184,7 @@ void check_fileio() {
   int flen = sflen(fh);
   ssystem(scmd, strlen(scmd));
   check_retcode(flen);
-  if (flen == 27) sh.println("flen ok"); 
+  if (flen == 27) sh.println("flen ok");
   else sh.println("flen error - check");
   sh.println("SYS_SEEK");
   ret = sseek(fh, 10);
@@ -147,7 +193,7 @@ void check_fileio() {
   sh.println("SYS_READ file");
   ret = sread(fh, buf, sizeof(buf));
   check_retcode(ret);
-  if (strcmp(buf, "klmnopqrstuvwxyz") == 0) sh.println("read ok"); 
+  if (strcmp(buf, "klmnopqrstuvwxyz") == 0) sh.println("read ok");
   else sh.println("read error- check");
   sh.println("SYS_CLOSE");
   ret = sclose(fh);
@@ -156,7 +202,7 @@ void check_fileio() {
   ret = sremove(fnam2, strlen(fnam2));
   check_retcode(ret);
   ssystem(scmd, strlen(scmd));
-} 
+}
 
 void check_iserror() {
   sh.println("SYS_ISERROR error codes");
@@ -216,6 +262,10 @@ void check_tmpnam() {
   sh.println("SYS_TMPNAM");
   int ret = stmpnam(buf, 0, sizeof(buf));
   check_retcode(ret);
+  if (ret == 0) {
+    sh.print("tmpnam: ");
+    sh.println(buf);
+  }
 }
 
 void check_exit() {
@@ -228,6 +278,7 @@ void setup() {
   sh.println("semihosting testbench");
   check_getcmdline();
   check_stdio();
+  check_features();
   check_write();
   check_read();
   check_readc();
