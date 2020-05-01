@@ -24,7 +24,7 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   sh.println("Hello ARM world!");
   char buf[256];
-  sgetcmdline(buf, sizeof(buf)); // set command line arguments with "set args" or "run".
+  sys_getcmdline(buf, sizeof(buf)); // set command line arguments with "set args" or "run".
   sh.print("command line: ");
   sh.println(buf);
   n = atoi(buf);

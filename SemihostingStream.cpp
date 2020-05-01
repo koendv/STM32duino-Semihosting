@@ -8,8 +8,8 @@
 
 SemihostingStream::SemihostingStream() {
   char *stdio_fname=":tt";
-  stdin_handle = semihosting::sopen(stdio_fname, semihosting::OPEN_MODE_R, strlen(stdio_fname));
-  stdout_handle = semihosting::sopen(stdio_fname, semihosting::OPEN_MODE_W, strlen(stdio_fname));
+  stdin_handle = semihosting::sys_open(stdio_fname, semihosting::OPEN_MODE_R, strlen(stdio_fname));
+  stdout_handle = semihosting::sys_open(stdio_fname, semihosting::OPEN_MODE_W, strlen(stdio_fname));
   inBuffered = 0;
   inReadPos = 0;
   outBuffered = 0;
@@ -17,8 +17,8 @@ SemihostingStream::SemihostingStream() {
 
 SemihostingStream::~SemihostingStream() {
   flush();
-  semihosting::sclose(stdin_handle);
-  semihosting::sclose(stdout_handle);
+  semihosting::sys_close(stdin_handle);
+  semihosting::sys_close(stdout_handle);
 }
 
 /* print on gdb console */
@@ -30,7 +30,7 @@ size_t SemihostingStream::write(uint8_t ch) {
 }
 
 void SemihostingStream::flush() {
-  if (outBuffered > 0) semihosting::swrite(stdout_handle, (void *)outBuffer, outBuffered);
+  if (outBuffered > 0) semihosting::sys_write(stdout_handle, (void *)outBuffer, outBuffered);
   outBuffered = 0;
   return;
 };
@@ -58,7 +58,7 @@ int SemihostingStream::available() {
 void SemihostingStream::fillBuffer() {
   if (inBuffered > 0) return;
   flush();
-  int rc = semihosting::sread(stdin_handle, inBuffer, inBufferSize);
+  int rc = semihosting::sys_read(stdin_handle, inBuffer, inBufferSize);
   if (rc < 0) inBuffered = 0;
   else inBuffered = inBufferSize - rc;
   inReadPos = 0;

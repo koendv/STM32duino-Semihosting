@@ -79,37 +79,37 @@ namespace semihosting
 
   typedef struct heapinfo_block
   {
-    int heap_base;
-    int heap_limit;
-    int stack_base;
-    int stack_limit;
+    int32_t heap_base;
+    int32_t heap_limit;
+    int32_t stack_base;
+    int32_t stack_limit;
   } heapinfo_block_t;
 
-  static inline int semihosting_call (int R0, int R1);
-  int sclock();
-  int sclose(int handle);
-  int selapsed(unsigned long long*);
-  int serrno();
-  void sexit(int reason);
-  void sexitextended(unsigned long long*);
-  int sflen(int handle);
-  int sgetcmdline(void *buf, unsigned int size);
-  int sheapinfo(heapinfo_block_t *block);
-  int siserror(int status);
-  int sistty(int handle);
-  int sopen(const char *path, open_mode_t mode, unsigned int path_len);
-  int sread(int handle, void *buf, unsigned int count);
-  int sreadc();
-  int sremove(char *path, unsigned int path_len);
-  int srename(char *old_path, unsigned int old_path_len, char *new_path, unsigned int new_path_len);
-  int sseek(int handle, int pos);
-  int ssystem(const char* command, unsigned int length);
-  int stickfreq();
-  unsigned int stime();
-  int stmpnam(void *buf, int target_id, unsigned int buf_size);
-  int swrite(int handle, void *buf, unsigned int count);
-  void swritec(char symbol);
-  void swrite0(char *string);
+  static inline int32_t semihosting_call (int32_t R0, int32_t R1);
+  int32_t sys_clock();
+  int32_t sys_close(int32_t handle);
+  int32_t sys_elapsed(uint64_t*);
+  int32_t sys_errno();
+  void sys_exit(int32_t reason);
+  void sys_exitextended(uint64_t*);
+  int32_t sys_flen(int32_t handle);
+  int32_t sys_getcmdline(void *buf, uint32_t size);
+  int32_t sys_heapinfo(heapinfo_block_t *block);
+  int32_t sys_iserror(int32_t status);
+  int32_t sys_istty(int32_t handle);
+  int32_t sys_open(const char *path, open_mode_t mode, uint32_t path_len);
+  int32_t sys_read(int32_t handle, void *buf, uint32_t count);
+  int32_t sys_readc();
+  int32_t sys_remove(char *path, uint32_t path_len);
+  int32_t sys_rename(char *old_path, uint32_t old_path_len, char *new_path, uint32_t new_path_len);
+  int32_t sys_seek(int32_t handle, int32_t pos);
+  int32_t sys_system(const char* command, uint32_t length);
+  int32_t sys_tickfreq();
+  uint32_t sys_time();
+  int32_t sys_tmpnam(void *buf, int32_t target_id, uint32_t buf_size);
+  int32_t sys_write(int32_t handle, void *buf, uint32_t count);
+  void sys_writec(char ch);
+  void sys_write0(char *str);
 
 }
 #endif

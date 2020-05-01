@@ -31,10 +31,10 @@ void loop() {
   sh.print("file: ");
   sh.println(fnam);
 
-  if ((fhandle = sopen(fnam.c_str(), semihosting::OPEN_MODE_R, fnam.length())) >= 0) {
+  if ((fhandle = sys_open(fnam.c_str(), semihosting::OPEN_MODE_R, fnam.length())) >= 0) {
     sh.print("file length: ");
-    sh.println(sflen(fhandle));
-    sclose(fhandle);
+    sh.println(sys_flen(fhandle));
+    sys_close(fhandle);
   } else sh.println("file open error");
 }
 

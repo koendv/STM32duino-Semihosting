@@ -8,7 +8,7 @@ With semihosting an arduino arm system can do keyboard input, screen output, and
 * install [stm32duino library](https://github.com/stm32duino/Arduino_Core_STM32)
 * install [stm32duino-semihosting library](https://github.com/koendv/stm32duino-semihosting) (this library)
 * connect a debugger probe with semihosting support, e.g. a [segger](https://www.segger.com/products/debug-probes/j-link/) or a [black magic probe](https://github.com/blacksphere/blackmagic/wiki).
-* run examples from File⇢Examples⇢STM32duino-Semihosting
+* run examples from File→Examples→STM32duino-Semihosting
 
 # Arduino Use
 Use SemihostingStream where you would use Serial:
@@ -21,7 +21,7 @@ void setup() {
 void loop() {
 }
 ```
-In the Arduino IDE, choose *Tools⇢Upload Method⇢BMP (Black Magic Probe)* and *Tools⇢Optimize⇢Debug (-g)*.
+In the Arduino IDE, choose *Tools→Upload Method→BMP (Black Magic Probe)* and *Tools→Optimize→Debug (-g)*.
 
 Every debugger probe is a bit different. When using e.g. Black Magic Probe you typically would use commands like:
 ```
@@ -55,32 +55,32 @@ The semihosting_bmp C++ header file contains the error numbers for Black Magic P
 # Semihosting calls
 Not every debugger probe implements every semihosting call, and even if it's implemented you may get some surprises.
 
-syscall           | function    |JLink|BMP|   |
-------------------|--------|---|---|---|
-SYS_CLOCK         | sclock   |   |   | Returns the number of centiseconds (hundredths of a second) since the execution started.
-SYS_CLOSE         | sclose   | * | * | Closes a file on the host system.
-SYS_ELAPSED       | selapsed   |   |   | Returns the number of elapsed target ticks since execution started. Use SYS_TICKFREQ to determine the tick frequency.
-SYS_ERRNO         | serrno   |   | * | Returns the value of the C library errno variable that is associated with the semihosting implementation.
-SYS_EXIT          | sexit   | * | * | Report to the debugger that execution has completed.
-SYS_EXIT_EXTENDED | sexitextended   |   |   | Report to the debugger that execution has completed. (64-bit version)
-SYS_FLEN          | sflen   | * | * | Returns the length of a specified file.
-SYS_GET_CMDLINE   | sgetcmdline   | * | * | Returns the command line that is used for the call to the executable, that is, argc and argv.
-SYS_HEAPINFO      | sheapinfo   |   |   | Returns the system stack and heap parameters. Used in crt0.S.
-SYS_ISERROR       | siserror   |   |   | Determines whether the return code from another semihosting call is an error status or not.
-SYS_ISTTY         | sistty   | * | * | Checks whether a file is connected to an interactive device.
-SYS_OPEN          | sopen   | * | * | Opens a file on the host system.
-SYS_READ          | sread   | * | * | Reads the contents of a file into a buffer.
-SYS_READC         | sreadc   | * | * | Reads a byte from the console.
-SYS_REMOVE        | sremove   | * | * | Deletes a specified file on the host filing system.
-SYS_RENAME        | srename   | * | * | Renames a specified file.
-SYS_SEEK          | sseek   | * | * | Seeks to a specified position in a file using an offset specified from the start of the file.
-SYS_SYSTEM        | ssystem   |   | * | Passes a command to the host command-line interpreter.
-SYS_TICKFREQ      | stickfreq   |   |   | Returns the tick frequency.
-SYS_TIME          | stime   |   | * | Returns the number of seconds since 00:00 January 1, 1970.
-SYS_TMPNAM        | stmpnam   |   |   | Returns a temporary name for a file identified by a system file identifier.
-SYS_WRITE         | swrite   | * | * | Writes the contents of a buffer to a specified file at the current file position.
-SYS_WRITEC        | swritec   | * | * | Writes a character byte to the debug channel.
-SYS_WRITE0        | swrite0   | * | * | Writes a null-terminated string to the debug channel.
+function|JLink|BMP|   |
+--------|---|---|---|
+sys_clock   |   |   | Returns the number of centiseconds (hundredths of a second) since the execution started.
+sys_close   | * | * | Closes a file on the host system.
+sys_elapsed   |   |   | Returns the number of elapsed target ticks since execution started. Use SYS_TICKFREQ to determine the tick frequency.
+sys_errno   |   | * | Returns the value of the C library errno variable that is associated with the semihosting implementation.
+sys_exit   | * | * | Report to the debugger that execution has completed.
+sys_exitextended   |   |   | Report to the debugger that execution has completed. (64-bit version)
+sys_flen   | * | * | Returns the length of a specified file.
+sys_getcmdline   | * | * | Returns the command line that is used for the call to the executable, that is, argc and argv.
+sys_heapinfo   |   |   | Returns the system stack and heap parameters. Used in crt0.S.
+sys_iserror   |   |   | Determines whether the return code from another semihosting call is an error status or not.
+sys_istty   | * | * | Checks whether a file is connected to an interactive device.
+sys_open   | * | * | Opens a file on the host system.
+sys_read   | * | * | Reads the contents of a file into a buffer.
+sys_readc   | * | * | Reads a byte from the console.
+sys_remove   | * | * | Deletes a specified file on the host filing system.
+sys_rename   | * | * | Renames a specified file.
+sys_seek   | * | * | Seeks to a specified position in a file using an offset specified from the start of the file.
+sys_system   |   | * | Passes a command to the host command-line interpreter.
+sys_tickfreq   |   |   | Returns the tick frequency.
+sys_time   |   | * | Returns the number of seconds since 00:00 January 1, 1970.
+sys_tmpnam   |   |   | Returns a temporary name for a file identified by a system file identifier.
+sys_write   | * | * | Writes the contents of a buffer to a specified file at the current file position.
+sys_writec   | * | * | Writes a character byte to the debug channel.
+sys_write0   | * | * | Writes a null-terminated string to the debug channel.
 
 J-Link data from document UM08001, software version 6.70, March 27, 2020.
 Black Magic Probe data from the source file ``src/target/cortexm.c``.

@@ -29,7 +29,6 @@ void loop() {
   sh.print("\nvalue: ");
   sh.println(f);
 
-  
   sh.print("enter string: ");
   while (!isAlphaNumeric(sh.peek())) sh.read();
   String s = sh.readStringUntil('\n');
