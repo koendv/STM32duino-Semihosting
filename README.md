@@ -59,12 +59,12 @@ function|JLink|BMP|   |
 --------|---|---|---|
 sys_clock   |   | * | Returns the number of centiseconds (hundredths of a second) since the execution started.
 sys_close   | * | * | Closes a file on the host system.
-sys_elapsed   |   |   | Returns the number of elapsed target ticks since execution started. Use SYS_TICKFREQ to determine the tick frequency.
-sys_errno   |   | * | Returns the value of the C library errno variable that is associated with the semihosting implementation.
+sys_elapsed   |   |   | Returns the number of elapsed target ticks since execution started.
+sys_errno   |   | * | Returns the value of the C library errno variable.
 sys_exit   | * | * | Report to the debugger that execution has completed.
-sys_exitextended   |   |   | Report to the debugger that execution has completed. (64-bit version)
+sys_exitextended   |   | * | Report to the debugger that execution has completed. (64-bit version)
 sys_flen   | * | * | Returns the length of a specified file.
-sys_getcmdline   | * | * | Returns the command line that is used for the call to the executable, that is, argc and argv.
+sys_getcmdline   | * | * | Returns the command line that is used for the call to the executable (= argc and argv).
 sys_heapinfo   |   | * | Returns the system stack and heap parameters. Used in crt0.S.
 sys_iserror   |   | * | Determines whether the return code from another semihosting call is an error status or not.
 sys_istty   | * | * | Checks whether a file is connected to an interactive device.
@@ -75,7 +75,7 @@ sys_remove   | * | * | Deletes a specified file on the host filing system.
 sys_rename   | * | * | Renames a specified file.
 sys_seek   | * | * | Seeks to a specified position in a file using an offset specified from the start of the file.
 sys_system   |   | * | Passes a command to the host command-line interpreter.
-sys_tickfreq   |   |   | Returns the tick frequency.
+sys_tickfreq   |   |   | Returns the number of target ticks per second.
 sys_time   |   | * | Returns the number of seconds since 00:00 January 1, 1970.
 sys_tmpnam   |   | * | Returns a temporary name for a file identified by a system file identifier.
 sys_write   | * | * | Writes the contents of a buffer to a specified file at the current file position.
