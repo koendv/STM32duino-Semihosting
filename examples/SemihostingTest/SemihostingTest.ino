@@ -135,7 +135,7 @@ void check_read() {
   sh.println("SYS_READ stdin");
   sh.println("Type a line of text. End with newline.");
   int ret = sys_read(stdin_handle, buf, sizeof(buf));
-  if (ret > 0) {
+  if (ret >= 0) {
     sh.print("number of characters read, including newline: ");
     sh.println(sizeof(buf)-ret);
   }
