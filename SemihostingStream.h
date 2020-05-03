@@ -4,6 +4,8 @@
 
 /* 
  * Arduino class to write to and read from semihosting console (stdin/stdout, buffered)
+ * 2020 Koen De Vleeschauwer
+ * No copyright asserted
  */
 
 #include <Stream.h>

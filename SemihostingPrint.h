@@ -4,6 +4,7 @@
 /* 
  * Arduino class to write to semihosting debug output (stderr, unbuffered)
  * 2020 Koen De Vleeschauwer
+ * No copyright asserted
  */
 
 #include <Print.h>

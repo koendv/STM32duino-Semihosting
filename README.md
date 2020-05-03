@@ -55,32 +55,32 @@ The semihosting_bmp C++ header file contains the error numbers for Black Magic P
 # Semihosting calls
 Not every debugger probe implements every semihosting call, and even if it's implemented you may get some surprises.
 
-function|JLink|BMP|   |
---------|---|---|---|
-sys_clock   |   | * | Returns the number of centiseconds (hundredths of a second) since the execution started.
-sys_close   | * | * | Closes a file on the host system.
-sys_elapsed   |   |   | Returns the number of elapsed target ticks since execution started.
-sys_errno   |   | * | Returns the value of the C library errno variable.
-sys_exit   | * | * | Report to the debugger that execution has completed.
-sys_exitextended   |   | * | Report to the debugger that execution has completed. (64-bit version)
-sys_flen   | * | * | Returns the length of a specified file.
+function       |JLink|BMP|   |
+-----------------|---|---|---|
+sys_clock        |   | * | Returns the number of centiseconds (hundredths of a second) since execution started.
+sys_close        | * | * | Closes a file on the host system.
+sys_elapsed      |   |   | Returns the number of elapsed target ticks since execution started.
+sys_errno        |   | * | Returns the value of the C library errno variable.
+sys_exit         | * | * | Report to the debugger that execution has completed.
+sys_exitextended |   | * | Report to the debugger that execution has completed. (64-bit version)
+sys_flen         | * | * | Returns the length of a specified file.
 sys_getcmdline   | * | * | Returns the command line that is used for the call to the executable (= argc and argv).
-sys_heapinfo   |   | * | Returns the system stack and heap parameters. Used in crt0.S.
-sys_iserror   |   | * | Determines whether the return code from another semihosting call is an error status or not.
-sys_istty   | * | * | Checks whether a file is connected to an interactive device.
-sys_open   | * | * | Opens a file on the host system.
-sys_read   | * | * | Reads the contents of a file into a buffer.
-sys_readc   | * | * | Reads a byte from the console.
-sys_remove   | * | * | Deletes a specified file on the host filing system.
-sys_rename   | * | * | Renames a specified file.
-sys_seek   | * | * | Seeks to a specified position in a file using an offset specified from the start of the file.
-sys_system   |   | * | Passes a command to the host command-line interpreter.
-sys_tickfreq   |   |   | Returns the number of target ticks per second.
-sys_time   |   | * | Returns the number of seconds since 00:00 January 1, 1970.
-sys_tmpnam   |   | * | Returns a temporary name for a file identified by a system file identifier.
-sys_write   | * | * | Writes the contents of a buffer to a specified file at the current file position.
-sys_writec   | * | * | Writes a character byte to the debug channel.
-sys_write0   | * | * | Writes a null-terminated string to the debug channel.
+sys_heapinfo     |   | * | Returns the system stack and heap parameters. Used in crt0.S.
+sys_iserror      |   | * | Determines whether the return code from another semihosting call is an error status or not.
+sys_istty        | * | * | Checks whether a file is connected to an interactive device.
+sys_open         | * | * | Opens a file on the host system.
+sys_read         | * | * | Reads the contents of a file into a buffer.
+sys_readc        | * | * | Reads a byte from the console.
+sys_remove       | * | * | Deletes a specified file on the host filing system.
+sys_rename       | * | * | Renames a specified file.
+sys_seek         | * | * | Seeks to a specified position in a file using an offset specified from the start of the file.
+sys_system       |   | * | Passes a command to the host command-line interpreter.
+sys_tickfreq     |   |   | Returns the number of target ticks per second.
+sys_time         |   | * | Returns the number of seconds since 00:00 January 1, 1970.
+sys_tmpnam       |   | * | Returns a temporary name for a file identified by a system file identifier.
+sys_write        | * | * | Writes the contents of a buffer to a specified file at the current file position.
+sys_writec       | * | * | Writes a character byte to the debug channel.
+sys_write0       | * | * | Writes a null-terminated string to the debug channel.
 
 J-Link data from document UM08001, software version 6.70, March 27, 2020.
 Black Magic Probe data from the source file ``src/target/cortexm.c``.
@@ -106,9 +106,3 @@ $ chmod 0444 ":semihosting-features"
 The [Qemu](http://www.qemu.org) emulator and the [openocd](http://www.openocd.org) debugger are open source projects that also support semihosting and gdb.
 
 If you find errors, omissions, or have additional data, feel free to open an issue.
-
-
-
-
-
-

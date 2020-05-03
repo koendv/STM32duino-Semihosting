@@ -1,7 +1,7 @@
 #ifndef SEMIHOSTING_SYSCALLS_H
 #define SEMIHOSTING_SYSCALLS_H
 
-/* 2020 Koen De Vleeschauwer, after Liviu Ionescu and Max Asulov */
+/* 2020 Koen De Vleeschauwer, after Liviu Ionescu and Max Asulov. No copyright asserted. */
 
 #include <cstdint>
 #include <cstddef>
@@ -105,7 +105,7 @@ namespace semihosting
   int32_t sys_seek(int32_t handle, int32_t pos);
   int32_t sys_system(const char* command, uint32_t length);
   int32_t sys_tickfreq();
-  uint32_t sys_time();
+  int32_t sys_time();
   int32_t sys_tmpnam(void *buf, int32_t target_id, uint32_t buf_size);
   int32_t sys_write(int32_t handle, void *buf, uint32_t count);
   void sys_writec(char ch);

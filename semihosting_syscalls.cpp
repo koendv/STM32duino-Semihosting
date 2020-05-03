@@ -3,6 +3,7 @@
 /* 
  * semihosting syscalls
  * 2020 Koen De Vleeschauwer, after Liviu Ionescu and Max Asulov
+ * No copyright asserted
  */
 
 namespace semihosting
@@ -142,8 +143,8 @@ namespace semihosting
     return semihosting_call(SYS_TICKFREQ, 0);
   }
 
-  uint32_t sys_time() {
-    return (uint32_t)semihosting_call(SYS_TIME, 0);
+  int32_t sys_time() {
+    return semihosting_call(SYS_TIME, 0);
   }
 
   int32_t sys_tmpnam(void *buf, int32_t target_id, uint32_t buf_size) {
@@ -161,7 +162,7 @@ namespace semihosting
       (uint32_t) buf,
       (uint32_t) count,
     };
-    return (count - semihosting_call(SYS_WRITE, (int32_t) args));
+    return semihosting_call(SYS_WRITE, (int32_t) args);
   }
 
   void sys_writec(char ch) {
