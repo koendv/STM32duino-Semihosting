@@ -27,15 +27,17 @@ Every debugger probe is a bit different. When using e.g. Black Magic Probe you t
 ```
 koen@raspberrypi:~ $ gdb -q
 (gdb) target extended-remote /dev/ttyBmpGdb
-(gdb) monitor help
 (gdb) monitor swdp_scan
 Available Targets:
 No. Att Driver
  1      STM32F1 medium density M3/M4
 (gdb) attach 1
+(gdb) file /tmp/arduino_build_195867/HelloWorld.ino.elf
+(gdb) load
 (gdb) run
 hello world!
 ^C
+(gdb) where
 (gdb) quit
 ```
 
