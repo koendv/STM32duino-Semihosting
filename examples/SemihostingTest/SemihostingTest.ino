@@ -11,6 +11,9 @@
  * (gdb) set remote system-call-allowed 1
  * BlackMagicProbe only:
  * (gdb) monitor heapinfo 0x1 0x2 0x3 0x4
+ * and create the file ":semihosting-features" in the directory where gdb runs:
+ * $ echo -e 'SHFB\x03' > ":semihosting-features"
+ * $ chmod 0444 ":semihosting-features"
  */
 
 #include <SemihostingStream.h>
