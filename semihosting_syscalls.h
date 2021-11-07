@@ -91,7 +91,7 @@ namespace semihosting
   int32_t sys_elapsed(uint64_t*);
   int32_t sys_errno();
   void sys_exit(int32_t reason);
-  void sys_exitextended(uint64_t*);
+  void sys_exit(uint32_t reason, int32_t code);
   int32_t sys_flen(int32_t handle);
   int32_t sys_getcmdline(void *buf, uint32_t size);
   int32_t sys_heapinfo(heapinfo_block_t *block);

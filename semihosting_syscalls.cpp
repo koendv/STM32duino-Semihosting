@@ -54,8 +54,13 @@ namespace semihosting
     return;
   }
 
-  void sys_exitextended(uint64_t* reason) {
-    semihosting_call(SYS_EXIT_EXTENDED, (int32_t) reason);
+  void sys_exit(uint32_t reason, int32_t code) {
+    uint32_t args[] = {
+      (uint32_t) reason,
+      (uint32_t) code,
+    };
+    semihosting_call(SYS_EXIT_EXTENDED, (int32_t) args);
+    for(;;);
     return;
   }
 

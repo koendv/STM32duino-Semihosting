@@ -64,7 +64,7 @@ sys_close        | * | * | Closes a file on the host system.
 sys_elapsed      |   |   | Returns the number of elapsed target ticks since execution started.
 sys_errno        |   | * | Returns the value of the C library errno variable.
 sys_exit         | * | * | Report to the debugger that execution has completed.
-sys_exitextended |   | * | Report to the debugger that execution has completed. (64-bit version)
+sys_exit         |   | * | Report to the debugger that execution has completed. (64-bit version)
 sys_flen         | * | * | Returns the length of a specified file.
 sys_getcmdline   | * | * | Returns the command line that is used for the call to the executable (= argc and argv).
 sys_heapinfo     |   | * | Returns the system stack and heap parameters. Used in crt0.S.

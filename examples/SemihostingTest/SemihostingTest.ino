@@ -281,6 +281,7 @@ void check_tmpnam() {
 void check_exit() {
   sh.println("SYS_EXIT");
   sys_exit(0);
+  //sys_exit(ADP_Stopped_ApplicationExit, 0xdeadbeef);
 }
 
 void setup() {
